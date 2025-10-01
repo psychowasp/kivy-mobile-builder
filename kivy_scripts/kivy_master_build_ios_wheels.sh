@@ -121,20 +121,13 @@ handle_kivy_master() {
       patch -t -d $ROOT/kivy-master -p1 -i $1
 }
 
-create_commit_sha_wheels() {
-      cd $2
-      for PLATFORM in arm64_iphoneos arm64_iphonesimulator x86_64_iphonesimulator
-      do
-      cp -rf kivy-3.0.0.dev0-cp313-cp313-ios_13_0_arm64_iphoneos
-      cp -rf 
-      done 
-}
+
 
 # execute
 
 handle_angle
 handle_sdl
-handle_kivy_master $ROOT/../patches/kivy3.patch
+handle_kivy_master $ROOT/../kivy3.patch
 
 cd ./kivy-master
 
