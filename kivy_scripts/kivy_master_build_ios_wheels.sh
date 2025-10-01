@@ -121,13 +121,20 @@ handle_kivy_master() {
       patch -t -d $ROOT/kivy-master -p1 -i $1
 }
 
-
+create_commit_sha_wheels() {
+      cd $1
+      for PLATFORM in arm64_iphoneos arm64_iphonesimulator x86_64_iphonesimulator
+      do
+            cp -rf kivy-$2-cp313-cp313-ios_13_0_$PLATFORM.whl kivy-$3-cp313-cp313-ios_13_0_$PLATFORM.whl
+      done 
+}
 
 # execute
+COMMIT_SHA="f6299897"
 
 handle_angle
 handle_sdl
-handle_kivy_master $ROOT/../kivy3.patch
+handle_kivy_master $ROOT/../patches/kivy3.patch
 
 cd ./kivy-master
 
@@ -135,3 +142,4 @@ build_ios_wheel arm64 iphoneos ios-arm64
 build_ios_wheel arm64 iphonesimulator ios-arm64_x86_64-simulator
 build_ios_wheel x86_64 iphonesimulator ios-arm64_x86_64-simulator
 
+create_commit_sha_wheels $ROOT/wheels 3.0.0.dev0 3.0.0.$COMMIT_SHA
