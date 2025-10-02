@@ -59,6 +59,10 @@ jobs:
         with:
           name: wheels-output
 
+      - uses: s-weigand/setup-conda@v1
+        with:
+          activate-conda: false
+
       - name: publish-to-anaconda
         run: |
           anaconda login --at anaconda.org --username ${{ secrets.ANACONDA_USER }} --password ${{ secrets.ANACONDA_PASS }}
