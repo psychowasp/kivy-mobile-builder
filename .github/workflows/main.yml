@@ -32,7 +32,7 @@ jobs:
       #  with:
       #    python-version: '3.14.rc3'
       - name: build wheels
-        run:
+        run: |
           mkdir build
           cd build
           ../kivy_scripts/kivy_master_build_ios_wheels.sh
