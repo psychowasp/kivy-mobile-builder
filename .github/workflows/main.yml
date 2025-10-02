@@ -70,7 +70,8 @@ jobs:
       - name: publish-to-anaconda
         run: |
           anaconda login --at anaconda.org --username ${{ secrets.ANACONDA_USER }} --password ${{ secrets.ANACONDA_PASS }}
-          for FILE in wheels
+          cd wheels
+          for FILE in *
           do
             anaconda upload -f $FILE
           done
