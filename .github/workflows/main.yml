@@ -76,7 +76,7 @@ jobs:
           cd wheels
           for FILE in *
           do
-            anaconda upload -f $FILE
+            anaconda upload --force $FILE
           done
           anaconda logout --at anaconda.org
       
