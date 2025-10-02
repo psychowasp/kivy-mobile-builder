@@ -126,6 +126,7 @@ create_commit_sha_wheels() {
       for PLATFORM in arm64_iphoneos arm64_iphonesimulator x86_64_iphonesimulator
       do
             cp -rf kivy-$2-cp313-cp313-ios_13_0_$PLATFORM.whl kivy-$3-cp313-cp313-ios_13_0_$PLATFORM.whl
+            cp -rf kivy-$2-cp314-cp314-ios_13_0_$PLATFORM.whl kivy-$3-cp314-cp314-ios_13_0_$PLATFORM.whl
       done 
 }
 
