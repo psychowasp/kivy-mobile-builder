@@ -72,8 +72,7 @@ jobs:
           anaconda login \
               --at anaconda.org \
               --username ${{ secrets.ANACONDA_USER }} \
-              --password ${{ secrets.ANACONDA_PASS }} \
-              --hostname abc
+              --password ${{ secrets.ANACONDA_PASS }}
           cd wheels
           for FILE in *
           do
