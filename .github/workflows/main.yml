@@ -15,7 +15,7 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   build:
-    name: Build Python
+    name: Build Kivy iOS Wheels
     # The type of runner that the job will run on
     #runs-on: self-hosted
     runs-on: macos-14
@@ -42,5 +42,13 @@ jobs:
           ../kivy_scripts/kivy_master_build_ios_wheels.sh
 
       - run: ls build/wheels
+
+      - name: publish-to-conda
+        uses: maxibor/conda-package-publish-action@v1.1
+        with:
+          subDir: 'build/wheels'
+          AnacondaToken: ${{ secrets.ANACONDA }}
+
+      
 
           
