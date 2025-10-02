@@ -66,7 +66,9 @@ jobs:
       - name: install anaconda client
         run: |
           pip install anaconda-client anaconda-auth
-
+          
+      - run: anaconda logout --at anaconda.org
+      
       - name: publish-to-anaconda
         run: |
           anaconda login --at anaconda.org --username ${{ secrets.ANACONDA_USER }} --password ${{ secrets.ANACONDA_PASS }}
@@ -75,6 +77,7 @@ jobs:
           do
             anaconda upload -f $FILE
           done
+          anaconda logout --at anaconda.org
       
 
           
