@@ -15,7 +15,7 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   build:
-    name: Build Python
+    name: Build Kivy iOS Wheels
     # The type of runner that the job will run on
     #runs-on: self-hosted
     runs-on: macos-14
@@ -28,3 +28,58 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: '3.13.7'
+      #- uses: actions/setup-python@v6
+      #  with:
+      #    python-version: '3.14.rc3'
+
+      - name: install cibuildwheel
+        run: pip3.13 install cibuildwheel
+        
+      - name: build wheels
+        run: |
+          mkdir build
+          cd build
+          ../kivy_scripts/kivy_master_build_ios_wheels.sh
+
+      - run: ls build/wheels
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wheels-output
+          path: ./build
+
+  anaconda_upload:
+    name: Upload to Anaconda
+    needs: [build]
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: wheels-output
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13.7'
+
+      - name: install anaconda client
+        run: |
+          pip install anaconda-client anaconda-auth
+      
+      - name: publish-to-anaconda
+        run: |
+          anaconda login \
+              --at anaconda.org \
+              --username ${{ secrets.ANACONDA_USER }} \
+              --password ${{ secrets.ANACONDA_PASS }} \
+              --hostname abc
+          cd wheels
+          for FILE in *
+          do
+            anaconda upload -f $FILE
+          done
+          anaconda logout --at anaconda.org
+      
+
+          
