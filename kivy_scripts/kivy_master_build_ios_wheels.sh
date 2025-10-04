@@ -116,26 +116,26 @@ handle_sdl() {
 }
 
 handle_kivy_master() {
-      wget -O master.zip https://github.com/kivy/kivy/archive/master.zip
-      unzip -o -qq master.zip
-      patch -t -d $ROOT/kivy-master -p1 -i $1
+      wget -O $1.zip https://github.com/kivy/kivy/archive/$1.zip
+      unzip -o -qq $1.zip
+      patch -t -d $ROOT/kivy-master -p1 -i $2
 }
 
 create_commit_sha_wheels() {
       cd $1
       for PLATFORM in arm64_iphoneos arm64_iphonesimulator x86_64_iphonesimulator
       do
-            cp -rf kivy-$2-cp313-cp313-ios_13_0_$PLATFORM.whl kivy-$3-cp313-cp313-ios_13_0_$PLATFORM.whl
-            cp -rf kivy-$2-cp314-cp314-ios_13_0_$PLATFORM.whl kivy-$3-cp314-cp314-ios_13_0_$PLATFORM.whl
+            find . -type f -name "kivy-*cp313-cp313-ios_13_0_$PLATFORM.whl" -exec cp -rf {} kivy-$3-cp313-cp313-ios_13_0_$PLATFORM.whl \;
+            find . -type f -name "kivy-*cp314-cp314-ios_13_0_$PLATFORM.whl" -exec cp -rf {} kivy-$3-cp314-cp314-ios_13_0_$PLATFORM.whl \;
       done 
 }
 
 # execute
-COMMIT_SHA="f6299897"
+COMMIT_SHA="1ab98017ea2a0049359c183833562b0aa31dbf39"
 
 handle_angle
 handle_sdl
-handle_kivy_master $ROOT/../patches/kivy3.patch
+handle_kivy_master $COMMIT_SHA $ROOT/../patches/kivy3.patch
 
 cd ./kivy-master
 
@@ -143,4 +143,4 @@ build_ios_wheel arm64 iphoneos ios-arm64
 build_ios_wheel arm64 iphonesimulator ios-arm64_x86_64-simulator
 build_ios_wheel x86_64 iphonesimulator ios-arm64_x86_64-simulator
 
-create_commit_sha_wheels $ROOT/wheels 3.0.0.dev0 3.0.0.$COMMIT_SHA
+create_commit_sha_wheels $ROOT/wheels 3.0.0.dev0 $COMMIT_SHA
