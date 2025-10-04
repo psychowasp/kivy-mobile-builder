@@ -19,7 +19,7 @@ build_iphoneos() {
         -C link-arg=-miphoneos-version-min=13.0 \
         -C link-arg=-L \
         -C link-arg=$PYTHONDIR \
-        -C link-arg=-undefined \$
+        -C link-arg=-undefined \
         -C link-arg=dynamic_lookup \
         " \
     maturin build --release --target aarch64-apple-ios -v
@@ -46,8 +46,7 @@ build_iphonesimulator_arm64() {
         -C link-arg=-miphoneos-version-min=13.0 \
         -C link-arg=-L \
         -C link-arg=$PYTHONDIR \
-        -C link-arg=-undefined -C link-arg=dynamic_lookup
-        " \
+        -C link-arg=-undefined -C link-arg=dynamic_lookup" \
     maturin build --release --target aarch64-apple-ios-sim -v
 
 }
@@ -78,18 +77,19 @@ build_iphonesimulator_x86_64() {
 }
 
 
-ROOT=$PWD
-PYTHON_XC="$ROOT/../Python.xcframework"
-OPENSSL_DIR="/usr/local/Cellar/openssl@3/3.5.2"
 
+ROOT=$PWD
+PYTHON_XC=$1
+OPENSSL_DIR="/usr/local/Cellar/openssl@3/3.5.2"
+OUTPUT=$3
 cd $2
 
 build_iphoneos $PYTHON_XC $OPENSSL_DIR 3.13
-find . -type f -name "$1*x86_64.whl" -exec mv {} ../$1-cp313-cp313-ios_13_0_arm64_iphoneos.whl \;
+find . -type f -name "$2*x86_64.whl" -exec mv {} $OUTPUT/$2-cp313-cp313-ios_13_0_arm64_iphoneos.whl \;
 
 build_iphonesimulator_arm64 $PYTHON_XC $OPENSSL_DIR 3.13
-find . -type f -name "$1*x86_64.whl" -exec mv {} ../$1-cp313-cp313-ios_13_0_arm64_iphonesimulator.whl \;
+find . -type f -name "$2*x86_64.whl" -exec mv {} $OUTPUT/$2-cp313-cp313-ios_13_0_arm64_iphonesimulator.whl \;
 
 build_iphonesimulator_x86_64 $PYTHON_XC $OPENSSL_DIR 3.13
-find . -type f -name "$1*x86_64.whl" -exec mv {} ../$1-cp313-cp313-ios_13_0_x86_64_iphonesimulator.whl \;
+find . -type f -name "$2*x86_64.whl" -exec mv {} $OUTPUT/$2-cp313-cp313-ios_13_0_x86_64_iphonesimulator.whl \;
 
