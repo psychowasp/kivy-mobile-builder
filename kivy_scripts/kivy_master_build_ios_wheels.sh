@@ -135,7 +135,7 @@ COMMIT_SHA="1ab98017ea2a0049359c183833562b0aa31dbf39"
 
 handle_angle
 handle_sdl
-handle_kivy_master $COMMIT_SHA $ROOT/../patches/kivy3.patch
+handle_kivy_master master $ROOT/../patches/kivy3.patch
 
 cd ./kivy-master
 
