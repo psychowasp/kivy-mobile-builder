@@ -76,7 +76,7 @@ jobs:
           cd wheels
           for FILE in *
           do
-            anaconda upload --force $FILE
+            anaconda upload --force $FILE --summary "No Summary"
           done
           anaconda logout --at anaconda.org
       
