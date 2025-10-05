@@ -39,7 +39,7 @@ jobs:
         run: |
           mkdir build
           cd build
-          ../kivy_scripts/kivy_master_build_ios_wheels.sh
+          ../kivy_scripts/kivy_build_ios_wheels.sh
 
       - run: ls build/wheels
 
