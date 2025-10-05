@@ -12,6 +12,7 @@ build_framework() {
     PROJECT=$2
     ARCHIVE_PATH=$3
     cd $4
+    OUTPUT=$5
 
     xcodebuild archive \
         -scheme $LIB \
@@ -32,7 +33,7 @@ build_framework() {
     xcodebuild -create-xcframework \
         -framework $ARCHIVE_PATH/Release-iphoneos.xcarchive/Products/Library/Frameworks/$LIB.framework\
         -framework $ARCHIVE_PATH/Release-iphonesimulator.xcarchive/Products/Library/Frameworks/$LIB.framework\
-        -output ../$LIB.xcframework
+        -output $OUTPUT/$LIB.xcframework
 
     cd ..
 }
@@ -66,11 +67,11 @@ download_fws() {
 
 download_fws
 
-build_framework SDL3 Xcode/SDL/SDL.xcodeproj Xcode/SDL/build SDL3-$SDL_VER
+build_framework SDL3 Xcode/SDL/SDL.xcodeproj Xcode/SDL/build SDL3-$SDL_VER $1
 
-build_framework SDL3_image Xcode/SDL_image.xcodeproj Xcode/build SDL3_image-$SDL_IMAGE_VER
+build_framework SDL3_image Xcode/SDL_image.xcodeproj Xcode/build SDL3_image-$SDL_IMAGE_VER $1
 
-build_framework SDL3_mixer Xcode/SDL_mixer.xcodeproj Xcode/build SDL_mixer-$SDL_MIXER_VER
+build_framework SDL3_mixer Xcode/SDL_mixer.xcodeproj Xcode/build SDL_mixer-$SDL_MIXER_VER $1
 
 sdl_ttf_extra SDL3_ttf-$SDL_TTF_VER
-build_framework SDL3_ttf Xcode/SDL_ttf.xcodeproj Xcode/build SDL3_ttf-$SDL_TTF_VER
+build_framework SDL3_ttf Xcode/SDL_ttf.xcodeproj Xcode/build SDL3_ttf-$SDL_TTF_VER $1
