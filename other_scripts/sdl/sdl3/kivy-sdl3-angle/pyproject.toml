@@ -1,6 +1,6 @@
 [project]
 name = "kivy-sdl3-angle"
-version = "3.0.0.0"
+version = "3.0.0.1"
 description = "SDL3 components for Kivy"
 readme = "README.md"
 authors = [

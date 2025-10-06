@@ -9,6 +9,11 @@ handle_angle() {
     tar -xzvf angle-iphoneall-universal.tar.gz -C $1
 }
 
+make_wheel() {
+    python3.13 -m pip wheel kivy-sdl3-angle -w $1
+    python3.14 -m pip wheel kivy-sdl3-angle -w $1
+}
+
 SCRIPT_DIR="$(dirname $0)"
 
 KIVY_SDL_ANGLE="$PWD/kivy-sdl3-angle"
@@ -22,3 +27,4 @@ $SCRIPT_DIR/build_frameworks.sh $KSA_SRC
 
 handle_angle $KSA_SRC
 
+make_wheel build/wheels
