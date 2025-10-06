@@ -39,7 +39,7 @@ jobs:
         run: |
           mkdir -p build/wheels
           cd build
-          ../other_scripts/sdl/sdl3/create_wheel.sh wheels
+          ../other_scripts/sdl/sdl3/create_wheel.sh $PWD/wheels
 
       - run: ls build/wheels
 

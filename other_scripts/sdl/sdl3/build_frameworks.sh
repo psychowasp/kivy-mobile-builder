@@ -49,6 +49,8 @@ download_fws() {
     SDL_FILE="SDL3-$SDL_VER.tar.gz"
     wget -O $SDL_FILE https://github.com/libsdl-org/SDL/releases/download/release-$SDL_VER/$SDL_FILE
     tar -xzvf $SDL_FILE
+    patch -t -d SDL3-$SDL_VER -p1 -i $PWD/../patches/uikit-transparent.patch
+    patch -t -d SDL3-$SDL_VER -p1 -i $PWD/../patches/disable-opengl.patch
 
     FILE="SDL3_image-$SDL_IMAGE_VER.tar.gz"
     wget -O $FILE https://github.com/libsdl-org/SDL_image/releases/download/release-$SDL_IMAGE_VER/$FILE
