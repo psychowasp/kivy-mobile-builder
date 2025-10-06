@@ -26,5 +26,4 @@ $SCRIPT_DIR/build_frameworks.sh $KSA_SRC
 
 handle_angle $KSA_SRC
 
-cd ..
-make_wheel build/wheels
+make_wheel ./wheels
