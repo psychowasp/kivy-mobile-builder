@@ -10,7 +10,7 @@ handle_angle() {
 }
 
 make_wheel() {
-    python3.13 -m pip wheel kivy-sdl3-angle -w $1
+    python3.13 -m pip wheel ./kivy-sdl3-angle -w $1
 }
 
 SCRIPT_DIR="$(dirname $0)"
