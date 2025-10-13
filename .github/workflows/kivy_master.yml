@@ -66,19 +66,11 @@ jobs:
       - name: install anaconda client
         run: |
           pip install anaconda-client anaconda-auth
-      
-      - name: publish-to-anaconda
-        run: |
-          anaconda login \
-              --at anaconda.org \
-              --username ${{ secrets.ANACONDA_USER }} \
-              --password "${{ secrets.ANACONDA_PASS }}"
-          cd wheels
-          for FILE in *
-          do
-            anaconda upload --force $FILE
-          done
-          anaconda logout --at anaconda.org
-      
 
-          
+      - uses: kivy-school/actions/anaconda_upload@main
+        with:
+          username: "${{ secrets.ANACONDA_USER }}"
+          password: "${{ secrets.ANACONDA_PASS }}"
+          wheels: wheels
+      
+    
