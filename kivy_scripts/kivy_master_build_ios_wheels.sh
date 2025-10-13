@@ -140,7 +140,7 @@ handle_angle
 handle_sdl
 handle_kivy_master master $ROOT/../patches/kivy3.patch
 
-cd ./kivy-master
+cd ./kivy
 
 COMMIT_SHA="$(git rev-parse --short=8 HEAD)"
 
