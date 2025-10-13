@@ -142,7 +142,7 @@ create_commit_sha_wheels() {
               echo "Found: $pkgver ($PYVER, $PLATFORM)"
               
               # Copy or rename wheel
-              cp -rf "$file" "${pkgver}-${PYVER}-ios_13_0_${PLATFORM}.whl"
+              cp -rf "$file" "${pkgver}-$2-${PYVER}-ios_13_0_${PLATFORM}.whl"
             fi
           done
         done
@@ -163,4 +163,4 @@ build_ios_wheel arm64 iphoneos ios-arm64
 build_ios_wheel arm64 iphonesimulator ios-arm64_x86_64-simulator
 build_ios_wheel x86_64 iphonesimulator ios-arm64_x86_64-simulator
 
-create_commit_sha_wheels $ROOT/wheels 3.0.0.dev0 $COMMIT_SHA
+create_commit_sha_wheels $ROOT/wheels $COMMIT_SHA
