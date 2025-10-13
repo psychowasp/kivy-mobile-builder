@@ -142,7 +142,7 @@ create_commit_sha_wheels() {
               echo "Found: $pkgver ($PYVER, $PLATFORM)"
               
               # Copy or rename wheel
-              cp -rf "$file" "${pkgver}-$2-${PYVER}-ios_13_0_${PLATFORM}.whl"
+              cp -rf "$file" "${pkgver}-$2-${PYVER}-${PYVER}-ios_13_0_${PLATFORM}.whl"
             fi
           done
         done
