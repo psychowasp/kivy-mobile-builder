@@ -125,13 +125,28 @@ handle_kivy_master() {
 
 create_commit_sha_wheels() {
       cd $1
-      for PLATFORM in arm64_iphoneos arm64_iphonesimulator x86_64_iphonesimulator
-      do
+      #for PLATFORM in arm64_iphoneos arm64_iphonesimulator x86_64_iphonesimulator
+      #do
             #find . -type f -name "kivy-*cp313-cp313-ios_13_0_$PLATFORM.whl" -exec cp -rf {} kivy-$3-cp313-cp313-ios_13_0_$PLATFORM.whl \;
             #find . -type f -name "kivy-*cp314-cp314-ios_13_0_$PLATFORM.whl" -exec cp -rf {} kivy-$3-cp314-cp314-ios_13_0_$PLATFORM.whl \;
-            find . -type f -name "kivy-*cp313-cp313-ios_13_0_$PLATFORM.whl" -execdir bash -c 'cp "$1" "${^(kivy-[^-]+)}"-$3-cp313-cp313-ios_13_0_$PLATFORM.whl' - {} \;
-            find . -type f -name "kivy-*cp314-cp314-ios_13_0_$PLATFORM.whl" -execdir bash -c 'cp "$1" "${^(kivy-[^-]+)}"-$3-cp314-cp314-ios_13_0_$PLATFORM.whl' - {} \;
-      done 
+      #done 
+      #!/bin/bash
+
+      for PLATFORM in arm64_iphoneos arm64_iphonesimulator x86_64_iphonesimulator; do
+        for PYVER in cp313 cp314; do
+          # Find all matching kivy wheels for this platform and Python version
+          find . -type f -name "kivy-*${PYVER}-ios_13_0_${PLATFORM}.whl" | while read -r file; do
+            # Extract kivy version (like "kivy-3.0.0.dev0") using regex
+            if [[ $file =~ (kivy-[^-]+) ]]; then
+              pkgver="${BASH_REMATCH[1]}"
+              echo "Found: $pkgver ($PYVER, $PLATFORM)"
+              
+              # Copy or rename wheel
+              cp -rf "$file" "${pkgver}-${PYVER}-ios_13_0_${PLATFORM}.whl"
+            fi
+          done
+        done
+      done
 }
 
 # execute
