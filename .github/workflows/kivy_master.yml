@@ -63,10 +63,6 @@ jobs:
         with:
           python-version: '3.13.7'
 
-      - name: install anaconda client
-        run: |
-          pip install anaconda-client anaconda-auth
-
       - uses: kivy-school/actions/anaconda_upload@main
         with:
           username: "${{ secrets.ANACONDA_USER }}"
