@@ -84,9 +84,6 @@ jobs:
             ln -s $GLES_FW/libGLESv2      $GLES_FW/libGLESv2.dylib
           done
 
-      
-          done
-
       - name: ls .
         run: |
           ls dist/Frameworks
