@@ -55,6 +55,12 @@ jobs:
         run: |
           FWS_DIR="$PWD/kivy/dist/Frameworks"
           pip3.13 install -i https://pypi.anaconda.org/kivyschool/simple kivy-sdl3-angle -t $FWS_DIR
+          
+          SDL_FW="$FWS_DIR/SDL3.xcframework/ios-arm64/SDL3.framework"
+          SDL3_Headers="$FWS_DIR/SDL3_Headers"
+          
+          cp -rf $SDL_FW/Headers SDL3_Headers
+          cp -rf $SDL_FW/Headers SDL3_Headers/SDL3
 
           for PLATFORM in ios-arm64 ios-arm64_x86_64-simulator
           do
