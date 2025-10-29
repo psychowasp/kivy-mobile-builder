@@ -52,14 +52,15 @@ jobs:
     
       - name: Handle SDL3 frameworks
         run: |
-          pip3.13 install -i https://pypi.anaconda.org/kivyschool/simple kivy-sdl3-angle -t $PWD/dist/Frameworks
+          FWS_DIR="$PWD/kivy/dist/Frameworks"
+          pip3.13 install -i https://pypi.anaconda.org/kivyschool/simple kivy-sdl3-angle -t $FWS_DIR
 
           for PLATFORM in ios-arm64 ios-arm64_x86_64-simulator
           do
-            SDL_FW="$PWD/dist/Frameworks/SDL3.xcframework/$PLATFORM/SDL3.framework"
-            SDL_IMAGE_FW="$PWD/dist/Frameworks/SDL3_image.xcframework/$PLATFORM/SDL3_image.framework"
-            SDL_MIXER_FW="$PWD/dist/Frameworks/SDL3_mixer.xcframework/$PLATFORM/SDL3_mixer.framework"
-            SDL_TTF_FW="$PWD/dist/Frameworks/SDL3_ttf.xcframework/$PLATFORM/SDL3_ttf.framework"
+            SDL_FW="$FWS_DIR/SDL3.xcframework/$PLATFORM/SDL3.framework"
+            SDL_IMAGE_FW="$FWS_DIR/SDL3_image.xcframework/$PLATFORM/SDL3_image.framework"
+            SDL_MIXER_FW="$FWS_DIR/SDL3_mixer.xcframework/$PLATFORM/SDL3_mixer.framework"
+            SDL_TTF_FW="$FWS_DIR/SDL3_ttf.xcframework/$PLATFORM/SDL3_ttf.framework"
       
             ln -s $SDL_FW/SDL3                  $SDL_FW/libSDL3.dylib
             ln -s $SDL_IMAGE_FW/SDL3_image      $SDL_IMAGE_FW/libSDL3_image.dylib
@@ -70,7 +71,7 @@ jobs:
       - name: Configure Angle
         run: |
           ANGLE_VERSION="chromium-7151_rev1"
-          ANGLE_FW=$PWD/dist/Frameworks
+          ANGLE_FW="$PWD/kivy/dist/Frameworks"
           
           wget -O angle-iphoneall-universal.tar.gz "https://github.com/kivy/angle-builder/releases/download/$ANGLE_VERSION/angle-iphoneall-universal.tar.gz"
           tar -xzvf angle-iphoneall-universal.tar.gz -C $ANGLE_FW
@@ -86,10 +87,12 @@ jobs:
 
       - name: ls .
         run: |
-          ls dist/Frameworks
+          ls kivy/dist/Frameworks
+          ls kivy
           ls .
 
       - name: Build wheel for ${{ matrix.arch }}
+        working-directory: ./kivy
         run: python3.13 -m cibuildwheel --output-dir wheelhouse
         # to supply options, put them in 'env', like:
         env:
