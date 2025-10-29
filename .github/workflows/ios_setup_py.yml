@@ -48,6 +48,7 @@ jobs:
               echo "simulator"
           fi
           
+          echo "plat_arch=$FW_PLAT" >> $GITHUB_OUTPUT
           echo "sdk_root=$SDK_ROOT" >> $GITHUB_OUTPUT
     
       - name: Handle SDL3 frameworks
@@ -101,4 +102,6 @@ jobs:
           CIBW_ARCHS: ${{ matrix.arch }}
           KIVY_SPLIT_EXAMPLES: 1
           IOSSDKROOT: ${{ steps.sdk_root.outputs.sdk_root }}
+          IOS_PLAT_ARCH: ${{ steps.sdk_root.outputs.plat_arch }}
+
         
