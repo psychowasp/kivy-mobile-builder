@@ -90,7 +90,7 @@ jobs:
           ls .
 
       - name: Build wheel for ${{ matrix.arch }}
-        run: python -m cibuildwheel --output-dir wheelhouse
+        run: python3.13 -m cibuildwheel --output-dir wheelhouse
         # to supply options, put them in 'env', like:
         env:
           # CI
