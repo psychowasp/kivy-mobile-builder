@@ -47,7 +47,7 @@ jobs:
               fi
               echo "simulator"
           fi
-
+          
           echo "sdk_root=$SDK_ROOT" >> $GITHUB_OUTPUT
     
       - name: Handle SDL3 frameworks
