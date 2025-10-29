@@ -56,15 +56,16 @@ jobs:
 
           for PLATFORM in ios-arm64 ios-arm64_x86_64-simulator
           do
-                SDL_FW="$PWD/dist/Frameworks/SDL3.xcframework/$PLATFORM/SDL3.framework"
-                SDL_IMAGE_FW="$PWD/dist/Frameworks/SDL3_image.xcframework/$PLATFORM/SDL3_image.framework"
-                SDL_MIXER_FW="$PWD/dist/Frameworks/SDL3_mixer.xcframework/$PLATFORM/SDL3_mixer.framework"
-                SDL_TTF_FW="$PWD/dist/Frameworks/SDL3_ttf.xcframework/$PLATFORM/SDL3_ttf.framework"
-          
-                ln -s $SDL_FW/SDL3                  $SDL_FW/libSDL3.dylib
-                ln -s $SDL_IMAGE_FW/SDL3_image      $SDL_IMAGE_FW/libSDL3_image.dylib
-                ln -s $SDL_MIXER_FW/SDL3_mixer      $SDL_MIXER_FW/libSDL3_mixer.dylib
-                ln -s $SDL_TTF_FW/SDL3_ttf          $SDL_TTF_FW/libSDL3_ttf.dylib
+            SDL_FW="$PWD/dist/Frameworks/SDL3.xcframework/$PLATFORM/SDL3.framework"
+            SDL_IMAGE_FW="$PWD/dist/Frameworks/SDL3_image.xcframework/$PLATFORM/SDL3_image.framework"
+            SDL_MIXER_FW="$PWD/dist/Frameworks/SDL3_mixer.xcframework/$PLATFORM/SDL3_mixer.framework"
+            SDL_TTF_FW="$PWD/dist/Frameworks/SDL3_ttf.xcframework/$PLATFORM/SDL3_ttf.framework"
+      
+            ln -s $SDL_FW/SDL3                  $SDL_FW/libSDL3.dylib
+            ln -s $SDL_IMAGE_FW/SDL3_image      $SDL_IMAGE_FW/libSDL3_image.dylib
+            ln -s $SDL_MIXER_FW/SDL3_mixer      $SDL_MIXER_FW/libSDL3_mixer.dylib
+            ln -s $SDL_TTF_FW/SDL3_ttf          $SDL_TTF_FW/libSDL3_ttf.dylib
+          done
           
       - name: Configure Angle
         run: |
