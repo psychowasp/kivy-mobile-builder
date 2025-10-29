@@ -56,12 +56,6 @@ jobs:
           FWS_DIR="$PWD/kivy/dist/Frameworks"
           pip3.13 install -i https://pypi.anaconda.org/kivyschool/simple kivy-sdl3-angle -t $FWS_DIR
           
-          SDL_FW="$FWS_DIR/SDL3.xcframework/ios-arm64/SDL3.framework"
-          SDL3_Headers="$FWS_DIR/SDL3_Headers"
-          
-          cp -rf $SDL_FW/Headers SDL3_Headers
-          cp -rf $SDL_FW/Headers SDL3_Headers/SDL3
-
           for PLATFORM in ios-arm64 ios-arm64_x86_64-simulator
           do
             SDL_FW="$FWS_DIR/SDL3.xcframework/$PLATFORM/SDL3.framework"
@@ -73,6 +67,8 @@ jobs:
             ln -s $SDL_IMAGE_FW/SDL3_image      $SDL_IMAGE_FW/libSDL3_image.dylib
             ln -s $SDL_MIXER_FW/SDL3_mixer      $SDL_MIXER_FW/libSDL3_mixer.dylib
             ln -s $SDL_TTF_FW/SDL3_ttf          $SDL_TTF_FW/libSDL3_ttf.dylib
+
+            cp -rf $SDL_FW/Headers $SDL_FW/Headers/SDL3
           done
           
       - name: Configure Angle
