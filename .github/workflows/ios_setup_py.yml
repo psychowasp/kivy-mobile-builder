@@ -93,18 +93,19 @@ jobs:
           ls kivy/dist/Frameworks
           ls kivy
           ls .
-
+      
       - name: Build wheel for ${{ matrix.arch }}
-        working-directory: ./kivy
-        run: python3.13 -m cibuildwheel --output-dir wheelhouse
-        # to supply options, put them in 'env', like:
+        uses: pypa/cibuildwheel@3
+        with:
+          package-dir: kivy
+          output-dir: wheelhouse
         env:
           # CI
           CIBW_PLATFORM: ios
           CIBW_ARCHS: ${{ matrix.arch }}
           KIVY_SPLIT_EXAMPLES: 1
           IOSSDKROOT: ${{ steps.sdk_root.outputs.sdk_root }}
-          IOS_PLAT_ARCH: ${{ steps.sdk_root.outputs.plat_arch }}
+      
 
       - name: List Wheelhouse
         run: ls kivy/wheelhouse
