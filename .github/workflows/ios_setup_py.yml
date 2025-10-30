@@ -41,6 +41,7 @@ jobs:
           fi
 
           chmod 755 $PWD/.ci/ios_frameworks.sh
+          cp $PWD/.ci/ios_frameworks.sh $PWD/kivy/.ci/ios_frameworks.sh
 
         
     
@@ -103,7 +104,7 @@ jobs:
           CIBW_PLATFORM: ios
           CIBW_ARCHS: ${{ matrix.arch }}
           CIBW_BEFORE_BUILD: .ci/ios_frameworks.sh
-          
+
           KIVY_SPLIT_EXAMPLES: 1
           IOSSDKROOT: ${{ steps.sdk_root.outputs.sdk_root }}
       
