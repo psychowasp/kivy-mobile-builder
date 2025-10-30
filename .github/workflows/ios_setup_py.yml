@@ -108,6 +108,6 @@ jobs:
       
 
       - name: List Wheelhouse
-        run: ls kivy/wheelhouse
+        run: ls wheelhouse
 
         
