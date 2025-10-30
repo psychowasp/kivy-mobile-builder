@@ -22,7 +22,8 @@ done
 ANGLE_VERSION="chromium-7151_rev1"
 ANGLE_FW="$PWD/kivy/dist/Frameworks"
 
-wget -O angle-iphoneall-universal.tar.gz "https://github.com/kivy/angle-builder/releases/download/$ANGLE_VERSION/angle-iphoneall-universal.tar.gz"
+#wget -O angle-iphoneall-universal.tar.gz "https://github.com/kivy/angle-builder/releases/download/$ANGLE_VERSION/angle-iphoneall-universal.tar.gz"
+curl -o angle-iphoneall-universal.tar.gz "https://github.com/kivy/angle-builder/releases/download/$ANGLE_VERSION/angle-iphoneall-universal.tar.gz"
 tar -xzvf angle-iphoneall-universal.tar.gz -C $ANGLE_FW
 
 for PLATFORM in ios-arm64 ios-arm64_x86_64-simulator
