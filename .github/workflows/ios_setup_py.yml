@@ -35,8 +35,8 @@ jobs:
               echo "sdk_root=$(xcrun --show-sdk-path --sdk iphonesimulator)" >> $GITHUB_OUTPUT
           fi
 
-      # - name: chmod +x kivy/.ci/ios_frameworks.sh
-      #   run: chmod +x kivy/.ci/ios_frameworks.sh
+      - name: chmod +x kivy/.ci/ios_frameworks.sh
+        run: chmod +x kivy/.ci/ios_frameworks.sh
 
         
       
