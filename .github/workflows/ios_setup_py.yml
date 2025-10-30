@@ -9,7 +9,8 @@ on:
 jobs:
   build_wheels:
     name: Build wheels on ${{ matrix.arch }}
-    runs-on: macos-15
+    #runs-on: macos-15
+    runs-on: self-hosted
     strategy:
       max-parallel: 1
       matrix:
