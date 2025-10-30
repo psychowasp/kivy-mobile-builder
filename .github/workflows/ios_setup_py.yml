@@ -81,16 +81,29 @@ jobs:
       #       ln -s $GLES_FW/libGLESv2      $GLES_FW/libGLESv2.dylib
       #     done
       
+      # - name: Build wheel for ${{ matrix.arch }}
+      #   uses: pypa/cibuildwheel@v3.2.1
+      #   with:
+      #     package-dir: kivy
+      #     output-dir: wheelhouse
+      #   env:
+      #     # CI
+      #     CIBW_PLATFORM: ios
+      #     CIBW_ARCHS: ${{ matrix.arch }}
+      #     CIBW_BEFORE_BUILD: .ci/ios_frameworks.sh
+      #     KIVY_SPLIT_EXAMPLES: 1
+      #     IOSSDKROOT: ${{ steps.sdk_root.outputs.sdk_root }}
+
       - name: Build wheel for ${{ matrix.arch }}
-        uses: pypa/cibuildwheel@v3.2.1
-        with:
-          package-dir: kivy
-          output-dir: wheelhouse
+        working-directory: ./kivy
+        run: python3.13 -m cibuildwheel --output-dir wheelhouse
+        # to supply options, put them in 'env', like:
         env:
           # CI
           CIBW_PLATFORM: ios
           CIBW_ARCHS: ${{ matrix.arch }}
           CIBW_BEFORE_BUILD: .ci/ios_frameworks.sh
+          
           KIVY_SPLIT_EXAMPLES: 1
           IOSSDKROOT: ${{ steps.sdk_root.outputs.sdk_root }}
       
