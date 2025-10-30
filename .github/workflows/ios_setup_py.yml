@@ -95,7 +95,7 @@ jobs:
           ls .
       
       - name: Build wheel for ${{ matrix.arch }}
-        uses: pypa/cibuildwheel@3
+        uses: pypa/cibuildwheel@v3.2.1
         with:
           package-dir: kivy
           output-dir: wheelhouse
