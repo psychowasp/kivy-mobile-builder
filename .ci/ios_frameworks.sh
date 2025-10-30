@@ -10,10 +10,10 @@ do
     SDL_MIXER_FW="$FWS_DIR/SDL3_mixer.xcframework/$PLATFORM/SDL3_mixer.framework"
     SDL_TTF_FW="$FWS_DIR/SDL3_ttf.xcframework/$PLATFORM/SDL3_ttf.framework"
 
-    ln -s $SDL_FW/SDL3                  $SDL_FW/libSDL3.dylib
-    ln -s $SDL_IMAGE_FW/SDL3_image      $SDL_IMAGE_FW/libSDL3_image.dylib
-    ln -s $SDL_MIXER_FW/SDL3_mixer      $SDL_MIXER_FW/libSDL3_mixer.dylib
-    ln -s $SDL_TTF_FW/SDL3_ttf          $SDL_TTF_FW/libSDL3_ttf.dylib
+    # ln -s $SDL_FW/SDL3                  $SDL_FW/libSDL3.dylib
+    # ln -s $SDL_IMAGE_FW/SDL3_image      $SDL_IMAGE_FW/libSDL3_image.dylib
+    # ln -s $SDL_MIXER_FW/SDL3_mixer      $SDL_MIXER_FW/libSDL3_mixer.dylib
+    # ln -s $SDL_TTF_FW/SDL3_ttf          $SDL_TTF_FW/libSDL3_ttf.dylib
 
     cp -rf $SDL_FW/Headers $SDL_FW/Headers/SDL3
 done
@@ -31,6 +31,6 @@ do
     EGL_FW="$ANGLE_FW/libEGL.xcframework/$PLATFORM/libEGL.framework"
     GLES_FW="$ANGLE_FW/libGLESv2.xcframework/$PLATFORM/libGLESv2.framework"
 
-    ln -s $EGL_FW/libEGL          $EGL_FW/libEGL.dylib
-    ln -s $GLES_FW/libGLESv2      $GLES_FW/libGLESv2.dylib
+    # ln -s $EGL_FW/libEGL          $EGL_FW/libEGL.dylib
+    # ln -s $GLES_FW/libGLESv2      $GLES_FW/libGLESv2.dylib
 done
