@@ -75,12 +75,6 @@ jobs:
       #       ln -s $EGL_FW/libEGL          $EGL_FW/libEGL.dylib
       #       ln -s $GLES_FW/libGLESv2      $GLES_FW/libGLESv2.dylib
       #     done
-
-      - name: ls .
-        run: |
-          ls kivy/dist/Frameworks
-          ls kivy
-          ls .
       
       - name: Build wheel for ${{ matrix.arch }}
         uses: pypa/cibuildwheel@v3.2.1
