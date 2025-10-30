@@ -9,8 +9,8 @@ on:
 jobs:
   build_wheels:
     name: Build wheels on ${{ matrix.arch }}
-    #runs-on: macos-15
-    runs-on: self-hosted
+    runs-on: macos-15
+    #runs-on: self-hosted
     strategy:
       max-parallel: 1
       matrix:
@@ -82,34 +82,32 @@ jobs:
       #       ln -s $GLES_FW/libGLESv2      $GLES_FW/libGLESv2.dylib
       #     done
       
-      # - name: Build wheel for ${{ matrix.arch }}
-      #   uses: pypa/cibuildwheel@v3.2.1
-      #   with:
-      #     package-dir: kivy
-      #     output-dir: wheelhouse
-      #   env:
-      #     # CI
-      #     CIBW_PLATFORM: ios
-      #     CIBW_ARCHS: ${{ matrix.arch }}
-      #     CIBW_BEFORE_BUILD: .ci/ios_frameworks.sh
-      #     KIVY_SPLIT_EXAMPLES: 1
-      #     IOSSDKROOT: ${{ steps.sdk_root.outputs.sdk_root }}
-
       - name: Build wheel for ${{ matrix.arch }}
-        working-directory: ./kivy
-        run: python3.13 -m cibuildwheel --output-dir wheelhouse
-        # to supply options, put them in 'env', like:
+        uses: pypa/cibuildwheel@v3.2.1
+        with:
+          package-dir: kivy
+          output-dir: wheelhouse
         env:
           # CI
           CIBW_PLATFORM: ios
           CIBW_ARCHS: ${{ matrix.arch }}
           CIBW_BEFORE_BUILD: .ci/ios_frameworks.sh
-
           KIVY_SPLIT_EXAMPLES: 1
           IOSSDKROOT: ${{ steps.sdk_root.outputs.sdk_root }}
+
+      # - name: Build wheel for ${{ matrix.arch }}
+      #   working-directory: ./kivy
+      #   run: python3.13 -m cibuildwheel --output-dir wheelhouse
+      #   # to supply options, put them in 'env', like:
+      #   env:
+      #     # CI
+      #     CIBW_PLATFORM: ios
+      #     CIBW_ARCHS: ${{ matrix.arch }}
+      #     CIBW_BEFORE_BUILD: .ci/ios_frameworks.sh
+
+      #     KIVY_SPLIT_EXAMPLES: 1
+      #     IOSSDKROOT: ${{ steps.sdk_root.outputs.sdk_root }}
       
 
-      - name: List Wheelhouse
-        run: ls wheelhouse
 
         
