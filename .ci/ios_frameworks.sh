@@ -1,6 +1,6 @@
 
 
-FWS_DIR="$PWD/dist/Frameworks"
+FWS_DIR="$PWD/kivy/dist/Frameworks"
 echo "Frameworks dir: $FWS_DIR"
 
 pip install -i https://pypi.anaconda.org/kivyschool/simple kivy-sdl3-angle -t $FWS_DIR
@@ -22,7 +22,7 @@ done
 
 
 ANGLE_VERSION="chromium-7151_rev1"
-ANGLE_FW="$PWD/dist/Frameworks"
+ANGLE_FW="$PWD/kivy/dist/Frameworks"
 
 #wget -O angle-iphoneall-universal.tar.gz "https://github.com/kivy/angle-builder/releases/download/$ANGLE_VERSION/angle-iphoneall-universal.tar.gz"
 curl -LO "https://github.com/kivy/angle-builder/releases/download/$ANGLE_VERSION/angle-iphoneall-universal.tar.gz"
