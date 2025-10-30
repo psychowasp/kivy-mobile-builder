@@ -106,4 +106,7 @@ jobs:
           IOSSDKROOT: ${{ steps.sdk_root.outputs.sdk_root }}
           IOS_PLAT_ARCH: ${{ steps.sdk_root.outputs.plat_arch }}
 
+      - name: List Wheelhouse
+        run: ls kivy/wheelhouse
+
         
