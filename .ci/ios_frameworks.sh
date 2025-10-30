@@ -1,6 +1,8 @@
 
 
 FWS_DIR="$PWD/dist/Frameworks"
+echo "Frameworks dir: $FWS_DIR"
+
 pip install -i https://pypi.anaconda.org/kivyschool/simple kivy-sdl3-angle -t $FWS_DIR
 
 for PLATFORM in ios-arm64 ios-arm64_x86_64-simulator
