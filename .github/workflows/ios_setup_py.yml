@@ -38,6 +38,10 @@ jobs:
           else
               echo "sdk_root=$(xcrun --show-sdk-path --sdk iphonesimulator)" >> $GITHUB_OUTPUT
           fi
+
+          chmod 755 $PWD/.ci/ios_frameworks.sh
+
+        
     
       # - name: Handle SDL3 frameworks
       #   run: |
