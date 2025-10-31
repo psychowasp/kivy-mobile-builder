@@ -116,31 +116,51 @@ handle_sdl() {
 }
 
 handle_kivy_master() {
-      wget -O $1.zip https://github.com/kivy/kivy/archive/$1.zip
-      unzip -o -qq $1.zip
-      patch -t -d $ROOT/kivy-master -p1 -i $2
+      #wget -O $1.zip https://github.com/kivy/kivy/archive/$1.zip
+      #unzip -o -qq $1.zip
+      #patch -t -d $ROOT/kivy-master -p1 -i $2
+      git clone https://github.com/kivy/kivy
+      patch -t -d $ROOT/kivy -p1 -i $2
 }
 
 create_commit_sha_wheels() {
       cd $1
-      for PLATFORM in arm64_iphoneos arm64_iphonesimulator x86_64_iphonesimulator
-      do
-            find . -type f -name "kivy-*cp313-cp313-ios_13_0_$PLATFORM.whl" -exec cp -rf {} kivy-$3-cp313-cp313-ios_13_0_$PLATFORM.whl \;
-            find . -type f -name "kivy-*cp314-cp314-ios_13_0_$PLATFORM.whl" -exec cp -rf {} kivy-$3-cp314-cp314-ios_13_0_$PLATFORM.whl \;
-      done 
+      #for PLATFORM in arm64_iphoneos arm64_iphonesimulator x86_64_iphonesimulator
+      #do
+            #find . -type f -name "kivy-*cp313-cp313-ios_13_0_$PLATFORM.whl" -exec cp -rf {} kivy-$3-cp313-cp313-ios_13_0_$PLATFORM.whl \;
+            #find . -type f -name "kivy-*cp314-cp314-ios_13_0_$PLATFORM.whl" -exec cp -rf {} kivy-$3-cp314-cp314-ios_13_0_$PLATFORM.whl \;
+      #done 
+      #!/bin/bash
+
+      for PLATFORM in arm64_iphoneos arm64_iphonesimulator x86_64_iphonesimulator; do
+        for PYVER in cp313 cp314; do
+          # Find all matching kivy wheels for this platform and Python version
+          find . -type f -name "kivy-*${PYVER}-ios_13_0_${PLATFORM}.whl" | while read -r file; do
+            # Extract kivy version (like "kivy-3.0.0.dev0") using regex
+            if [[ $file =~ (kivy-[^-]+) ]]; then
+              pkgver="${BASH_REMATCH[1]}"
+              echo "Found: $pkgver ($PYVER, $PLATFORM)"
+              
+              # Copy or rename wheel
+              cp -rf "$file" "${pkgver}.$2-${PYVER}-${PYVER}-ios_13_0_${PLATFORM}.whl"
+            fi
+          done
+        done
+      done
 }
 
 # execute
-COMMIT_SHA="1ab98017ea2a0049359c183833562b0aa31dbf39"
 
 handle_angle
 handle_sdl
 handle_kivy_master master $ROOT/../patches/kivy3.patch
 
-cd ./kivy-master
+cd ./kivy
+
+COMMIT_SHA="$(git rev-parse --short=8 HEAD)"
 
 build_ios_wheel arm64 iphoneos ios-arm64
 build_ios_wheel arm64 iphonesimulator ios-arm64_x86_64-simulator
 build_ios_wheel x86_64 iphonesimulator ios-arm64_x86_64-simulator
 
-create_commit_sha_wheels $ROOT/wheels 3.0.0.dev0 $COMMIT_SHA
+create_commit_sha_wheels $ROOT/wheels $COMMIT_SHA
