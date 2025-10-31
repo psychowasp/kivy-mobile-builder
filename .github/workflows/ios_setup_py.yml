@@ -1,0 +1,71 @@
+name: Setup.py iOS Wheels test
+
+
+on: 
+  - push
+  #- pull_request
+  - workflow_dispatch
+
+jobs:
+  build_wheels:
+    name: Build wheels on ${{ matrix.arch }}
+    runs-on: macos-15
+    #runs-on: self-hosted
+    strategy:
+      max-parallel: 1
+      matrix:
+        arch: [arm64_iphoneos, arm64_iphonesimulator, x86_64_iphonesimulator]
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Clone GuillaumeFalourd/poc-github-actions PUBLIC repository
+        uses: GuillaumeFalourd/clone-github-repo-action@v2.3
+        with:
+            branch: 'mobile_wheels'
+            owner: 'kivy-school'
+            repository: 'kivy'
+
+      - name: SDK Root
+        id: sdk_root
+        run: |
+          if [[ "${{ matrix.arch }}" == "arm64_iphoneos" ]]; then
+              echo "sdk_root=$(xcrun --show-sdk-path --sdk iphoneos)" >> $GITHUB_OUTPUT
+          else
+              echo "sdk_root=$(xcrun --show-sdk-path --sdk iphonesimulator)" >> $GITHUB_OUTPUT
+          fi
+
+      - name: chmod +x kivy/.ci/ios_frameworks.sh
+        run: chmod +x kivy/.ci/ios_frameworks.sh
+
+        
+      
+      - name: Build wheel for ${{ matrix.arch }}
+        uses: pypa/cibuildwheel@v3.2.1
+        with:
+          package-dir: kivy
+          output-dir: wheelhouse
+        env:
+          # CI
+          CIBW_PLATFORM: ios
+          CIBW_ARCHS: ${{ matrix.arch }}
+          #CIBW_BEFORE_BUILD: kivy/.ci/ios_frameworks.sh
+          KIVY_SPLIT_EXAMPLES: 1
+          IOSSDKROOT: ${{ steps.sdk_root.outputs.sdk_root }}
+
+      # - name: Build wheel for ${{ matrix.arch }}
+      #   working-directory: ./kivy
+      #   run: python3.13 -m cibuildwheel --output-dir wheelhouse
+      #   # to supply options, put them in 'env', like:
+      #   env:
+      #     # CI
+      #     CIBW_PLATFORM: ios
+      #     CIBW_ARCHS: ${{ matrix.arch }}
+      #     CIBW_BEFORE_BUILD: .ci/ios_frameworks.sh
+
+      #     KIVY_SPLIT_EXAMPLES: 1
+      #     IOSSDKROOT: ${{ steps.sdk_root.outputs.sdk_root }}
+      
+
+
+        
