@@ -1,0 +1,65 @@
+name: 'Kivy iOS Wheel'
+description: 'Build Kivy iOS wheels for a specific architecture'
+inputs:
+  arch:
+    description: 'Target architecture (arm64_iphoneos, arm64_iphonesimulator, x86_64_iphonesimulator)'
+    required: true
+  repository:
+    description: 'Repository to clone'
+    required: false
+    default: 'kivy'
+  owner:
+    description: 'Repository owner'
+    required: false
+    default: 'kivy-school'
+  branch:
+    description: 'Branch to clone'
+    required: false
+    default: 'mobile_wheels'
+  package-dir:
+    description: 'Package directory'
+    required: false
+    default: 'kivy'
+  output-dir:
+    description: 'Output directory for wheels'
+    required: false
+    default: 'wheelhouse'
+  kivy-split-examples:
+    description: 'Split Kivy examples'
+    required: false
+    default: '1'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Clone repository
+      uses: GuillaumeFalourd/clone-github-repo-action@v2.3
+      with:
+        branch: ${{ inputs.branch }}
+        owner: ${{ inputs.owner }}
+        repository: ${{ inputs.repository }}
+
+    - name: SDK Root
+      id: sdk_root
+      shell: bash
+      run: |
+        if [[ "${{ inputs.arch }}" == "arm64_iphoneos" ]]; then
+            echo "sdk_root=$(xcrun --show-sdk-path --sdk iphoneos)" >> $GITHUB_OUTPUT
+        else
+            echo "sdk_root=$(xcrun --show-sdk-path --sdk iphonesimulator)" >> $GITHUB_OUTPUT
+        fi
+
+    - name: chmod +x kivy/.ci/ios_frameworks.sh
+      shell: bash
+      run: chmod +x kivy/.ci/ios_frameworks.sh
+
+    - name: Build wheel for ${{ inputs.arch }}
+      uses: pypa/cibuildwheel@v3.2.1
+      with:
+        package-dir: ${{ inputs.package-dir }}
+        output-dir: ${{ inputs.output-dir }}
+      env:
+        CIBW_PLATFORM: ios
+        CIBW_ARCHS: ${{ inputs.arch }}
+        KIVY_SPLIT_EXAMPLES: ${{ inputs.kivy-split-examples }}
+        IOSSDKROOT: ${{ steps.sdk_root.outputs.sdk_root }}

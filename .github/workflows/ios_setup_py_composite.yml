@@ -1,0 +1,31 @@
+name: iOS Wheels Builder
+
+
+on: 
+  - push
+  #- pull_request
+  - workflow_dispatch
+
+jobs:
+  build_wheels:
+    name: Build wheels on ${{ matrix.arch }}
+    runs-on: macos-15
+    #runs-on: self-hosted
+    strategy:
+      max-parallel: 1
+      matrix:
+        arch: [arm64_iphoneos, arm64_iphonesimulator, x86_64_iphonesimulator]
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Build iOS Wheel
+        uses: kivy-school/actions/kivy-ios-wheel@main
+        with:
+          arch: ${{ matrix.arch }}
+          repository: 'kivy'
+          owner: 'kivy-school'
+          branch: 'mobile_wheels'
+          package-dir: 'kivy'
+          output-dir: 'wheelhouse'
+          kivy-split-examples: '1'
