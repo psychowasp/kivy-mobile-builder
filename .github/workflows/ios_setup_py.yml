@@ -49,7 +49,7 @@ jobs:
           # CI
           CIBW_PLATFORM: ios
           CIBW_ARCHS: ${{ matrix.arch }}
-          #CIBW_BEFORE_BUILD: kivy/.ci/ios_frameworks.sh
+          CIBW_BEFORE_BUILD: kivy/.ci/ios_frameworks.sh
           KIVY_SPLIT_EXAMPLES: 1
           IOSSDKROOT: ${{ steps.sdk_root.outputs.sdk_root }}
 
